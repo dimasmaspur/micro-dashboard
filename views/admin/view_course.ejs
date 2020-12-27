@@ -1,0 +1,199 @@
+<!-- header -->
+<%- include('../partials/header.ejs') %>
+<!-- ============================================================== -->
+<!-- End Topbar header -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Left Sidebar - style you can find in sidebar.scss  -->
+<!-- ============================================================== -->
+<!-- sidebar -->
+<%- include('../partials/sidebar.ejs') %>
+
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <div class="page-breadcrumb">
+                <div class="row">
+                    <div class="col-7 align-self-center">
+                        <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">Halo Admin</h3>
+                        <div class="d-flex align-items-center">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb m-0 p-0">
+                                    <li class="breadcrumb-item"><a href="index.html">Course List</a>
+                                    </li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <button type="button" class="btn waves-effect waves-light btn-primary mb-3" data-toggle="modal"
+                data-target="#full-width-modal">Add Data</button>
+                 <!-- basic table -->
+                 <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="zero_config" class="table table-striped table-bordered no-wrap">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Position</th>
+                                                <th>Office</th>
+                                                <th>Age</th>
+                                                <th>Start date</th>
+                                                <th>Salary</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>61</td>
+                                                <td>2011/04/25</td>
+                                                <td>$320,800</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            <%- include('../partials/footer.ejs') %>
+
+            <!-- ============================================================== -->
+            <!-- End footer -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+
+
+    <!-- Full width modal content -->
+    <div id="full-width-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="fullWidthModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-full-width">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="fullWidthModalLabel">Add Data Course</h4>
+                <button type="button" class="close" data-dismiss="modal"
+                    aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <form class="mt-4">
+                    <div class="form-group">
+                        <label for="">Course Name</label>
+                        <input type="text" class="form-control" id="placeholder"
+                            placeholder="Course Name">
+                    </div>
+                    <div class="custom-control custom-radio mb-3">
+                        <input type="radio" id="customRadio1" name="customRadio"
+                        class="custom-control-input">
+                        <label class="custom-control-label" for="customRadio1">Certificate</label>
+                    </div>
+                    <label for="">Type</label><br>
+                    <div class="form-check form-check-inline">
+                        <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" id="customControlValidation2"
+                                name="radio-stacked">
+                            <label class="custom-control-label" for="customControlValidation2">Free</label>
+                        </div>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" id="customControlValidation3"
+                                name="radio-stacked">
+                            <label class="custom-control-label" for="customControlValidation3">Premium</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group mt-3 mb-4">
+                        <label class="mr-sm-2" for="inlineFormCustomSelect">Status</label>
+                        <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                            <option selected>Choose...</option>
+                            <option value="1">Published</option>
+                            <option value="2">Draft</option>
+                        </select>
+                    </div>
+                    <div class="form-group mt-3 mb-4">
+                        <label class="mr-sm-2" for="inlineFormCustomSelect">Level</label>
+                        <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                            <option selected>Choose...</option>
+                            <option value="1">Beginner</option>
+                            <option value="2">Intermediate</option>
+                            <option value="2">Advance</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Mentor Id</label>
+                        <input type="text" class="form-control" id="placeholder"
+                            placeholder="Mentor Id">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light"
+                    data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+    <script src="/libs/jquery/dist/jquery.min.js"></script>
+    <script src="/libs/popper.js/dist/umd/popper.min.js"></script>
+    <script src="/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- apps -->
+    <!-- apps -->
+    <script src="/dist/js/app-style-switcher.js"></script>
+    <script src="/dist/js/feather.min.js"></script>
+    <script src="/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+    <script src="/dist/js/sidebarmenu.js"></script>
+    <!--Custom JavaScript -->
+    <script src="/dist/js/custom.min.js"></script>
+    <!--This page JavaScript -->
+    <script src="/extra-libs/c3/d3.min.js"></script>
+    <script src="/extra-libs/c3/c3.min.js"></script>
+    <script src="/libs/chartist/dist/chartist.min.js"></script>
+    <script src="/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
+    <script src="/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js"></script>
+    <script src="/extra-libs/jvector/jquery-jvectormap-world-mill-en.js"></script>
+    <script src="/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/dist/js/pages/datatable/datatable-basic.init.js"></script>
+
+</body>
+
+</html>
