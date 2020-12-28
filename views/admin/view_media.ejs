@@ -28,7 +28,7 @@
                         <div class="d-flex align-items-center">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb m-0 p-0">
-                                    <li class="breadcrumb-item"><a href="index.html">Mentor</a>
+                                    <li class="breadcrumb-item"><a href="index.html">Media</a>
                                     </li>
                                 </ol>
                             </nav>
@@ -44,7 +44,7 @@
             <!-- ============================================================== -->
             <div class="container-fluid">
                 <button type="button" class="btn waves-effect waves-light btn-primary mb-3" data-toggle="modal"
-                data-target="#full-width-modal">Add Data</button>
+                data-target="#full-width-modal">Add Media</button>
                  <!-- basic table -->
                  <% if(alert.message != "") {%>
                     <div class="alert alert-<%= alert.status %>" role="alert">
@@ -60,23 +60,20 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>Name</th>
-                                                <th>Course Id</th>
+                                                <th>Image</th>
+                                                <th>Url Image</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <% for(let i=0; i < dataChapter.length; i++){ %>
+                                            <% for(let i=0; i < dataMedia.length; i++){ %>
                                                 <tr>
                                                     <td><%= i+1 %></td>
-                                                    <td><%= dataChapter[i].name %></td>
-                                                    <td><%= dataChapter[i].course_id %></td>
+                                                    <td><img src="<%= dataMedia[i].image %>" width="100" alt="image"></td>
+                                                    <td><%= dataMedia[i].image %></td>
                                                     <td>
-                                                        <form action="/dashboard/chapter/<%= dataChapter[i].id %>?_method=DELETE" method="POST">
-                                                        <a href="javascript:void()" type="button" class="btn waves-effect waves-light btn-warning tombol-edit" data-toggle="modal"
-                                                        data-target="#full-width-modal-edit" data-id="<%= dataChapter[i].id %>" data-name="<%= dataChapter[i].name %>" data-course_id="<%= dataChapter[i].course_id %>"><i data-feather="edit" class="feather-icon"></i></a>
-                                                            <button type="submit" class="btn waves-effect waves-light btn-danger"><i data-feather="delete" class="feather-icon"></i></button></td>
-                                                        </form>
+                                                        <button type="submit" class="btn waves-effect waves-light btn-danger"><i data-feather="delete" class="feather-icon"></i></button></td>
+                                                    </form>
                                                 </tr>
                                             <% } %>
                                         </tbody>
@@ -116,22 +113,16 @@
     aria-labelledby="fullWidthModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-full-width">
         <div class="modal-content">
-            <form action="/dashboard/chapter" method="POST">
+            <form action="/dashboard/media" method="POST" enctype="multipart/form-data">
             <div class="modal-header">
-                <h4 class="modal-title" id="fullWidthModalLabel">Add Data Chapter</h4>
+                <h4 class="modal-title" id="fullWidthModalLabel">Add Media</h4>
                 <button type="button" class="close" data-dismiss="modal"
                     aria-hidden="true">×</button>
             </div>
             <div class="modal-body">
                     <div class="form-group">
-                        <label for="">Chapter Name</label>
-                        <input type="text" class="form-control" name="name" id="placeholder"
-                            placeholder="Chapter Name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="">Course Id</label>
-                        <input type="text" class="form-control" name="course_id" id="placeholder"
-                            placeholder="Course Id" >
+                        <label for="">Upload Imge</label>
+                        <input type="file" class="form-control" name="image">
                     </div>
             </div>
             <div class="modal-footer">
@@ -145,43 +136,7 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<div id="full-width-modal-edit" class="modal fade" tabindex="-1" role="dialog2"
-aria-labelledby="fullWidthModalLabel" aria-hidden="true">
-<div class="modal-dialog modal-full-width">
-    <div class="modal-content">
-        <form action="/dashboard/chapter?_method=PUT" method="POST">
-            <div class="form-group">
-                <input type="hidden" class="form-control id" name="id">
-            </div>
-        <div class="modal-header">
-            <h4 class="modal-title" id="fullWidthModalLabel">Edit Data Chapter</h4>
-            <button type="button" class="close" data-dismiss="modal"
-                aria-hidden="true">×</button>
-        </div>
-        <div class="modal-body">
-                <div class="form-group">
-                    <label for="">Chapter Name</label>
-                    <input type="text" class="form-control name" name="name" id="placeholder"
-                        placeholder="Chapter Name" required>
-                </div>
-                <div class="form-group">
-                    <label for="">Course Id</label>
-                    <input type="text" class="form-control course_id" name="course_id" id="placeholder"
-                        placeholder="Course Id" >
-                </div>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-light"
-                data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Save changes</button>
-        </div>
-        
-    </form>
-    </div><!-- /.modal-content -->
-</div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 
-   
     <script src="/libs/jquery/dist/jquery.min.js"></script>
     <script src="/libs/popper.js/dist/umd/popper.min.js"></script>
     <script src="/libs/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -203,21 +158,6 @@ aria-labelledby="fullWidthModalLabel" aria-hidden="true">
     <script src="/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="/dist/js/pages/datatable/datatable-basic.init.js"></script>
 
-    <script>
-        $('#zero_config').on('click','.tombol-edit', function(){
-            let id = $(this).data('id');
-            let name = $(this).data('name');
-            let course_id = $(this).data('course_id');
-            
-
-
-            $('#full-width-modal-edit').modal('show');
-            $('.id').val(id);
-            $('.name').val(name);
-            $('.course_id').val(course_id);
-           
-        })
-    </script>
 </body>
 
 </html>

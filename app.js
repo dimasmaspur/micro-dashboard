@@ -4,6 +4,12 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
+const methodOverride = require('method-override');
+const session = require('express-session');
+const flash = require('connect-flash');
+const bodyParser = require('body-parser')
+
+
 
 const indexRouter = require("./routes/index");
 const adminRouter = require("./routes/admin");
@@ -25,17 +31,29 @@ const can = require("./middlewares/permission");
 
 const app = express();
 
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { maxAge: 60000 }
+}));
+app.use(flash());
 const cors = require("cors");
 app.use(cors("*"));
 
 app.use(logger("dev"));
 app.use(express.json({ limit: "50mb" }));
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(express.urlencoded({ extended: false, limit: "50mb" }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.set('views', './views');
 app.set('view engine', 'ejs');
+app.use(methodOverride('_method'));
 
 // dashboard
 app.use("/", indexRouter);

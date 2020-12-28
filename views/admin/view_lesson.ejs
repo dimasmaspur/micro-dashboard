@@ -15,10 +15,12 @@
         <!-- ============================================================== -->
         <!-- Page wrapper  -->
         <!-- ============================================================== -->
+       
         <div class="page-wrapper">
             <!-- ============================================================== -->
             <!-- Bread crumb and right sidebar toggle -->
             <!-- ============================================================== -->
+            
             <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-7 align-self-center">
@@ -26,7 +28,7 @@
                         <div class="d-flex align-items-center">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb m-0 p-0">
-                                    <li class="breadcrumb-item"><a href="index.html">Course List</a>
+                                    <li class="breadcrumb-item"><a href="index.html">Lesson</a>
                                     </li>
                                 </ol>
                             </nav>
@@ -41,7 +43,51 @@
             <!-- Container fluid  -->
             <!-- ============================================================== -->
             <div class="container-fluid">
-               lesson
+                <button type="button" class="btn waves-effect waves-light btn-primary mb-3" data-toggle="modal"
+                data-target="#full-width-modal">Add Data</button>
+                 <!-- basic table -->
+                 <% if(alert.message != "") {%>
+                    <div class="alert alert-<%= alert.status %>" role="alert">
+                        <%= alert.message %>
+                      </div>
+                    <% } %>
+                 <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="zero_config" class="table table-striped table-bordered no-wrap">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Name</th>
+                                                <th>Video URL</th>
+                                                <th>Chapter Id</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% for(let i=0; i < dataLesson.length; i++){ %>
+                                                <tr>
+                                                    <td><%= i+1 %></td>
+                                                    <td><%= dataLesson[i].name %></td>
+                                                    <td><%= dataLesson[i].video %></td>
+                                                    <td><%= dataLesson[i].chapter_id %></td>
+                                                    <td>
+                                                        <form action="/dashboard/lesson/<%= dataLesson[i].id %>?_method=DELETE" method="POST">
+                                                        <a href="javascript:void()" type="button" class="btn waves-effect waves-light btn-warning tombol-edit" data-toggle="modal"
+                                                        data-target="#full-width-modal-edit" data-id="<%= dataLesson[i].id %>"  data-video="<%= dataLesson[i].video %>" data-name="<%= dataLesson[i].name %>" data-chapter_id="<%= dataLesson[i].chapter_id %>"><i data-feather="edit" class="feather-icon"></i></a>
+                                                            <button type="submit" class="btn waves-effect waves-light btn-danger"><i data-feather="delete" class="feather-icon"></i></button></td>
+                                                        </form>
+                                                </tr>
+                                            <% } %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <!-- ============================================================== -->
             <!-- End Container fluid  -->
@@ -66,6 +112,88 @@
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
+
+
+    <div id="full-width-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="fullWidthModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-full-width">
+        <div class="modal-content">
+            <form action="/dashboard/lesson" method="POST">
+            <div class="modal-header">
+                <h4 class="modal-title" id="fullWidthModalLabel">Add Data Lesson</h4>
+                <button type="button" class="close" data-dismiss="modal"
+                    aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                    <div class="form-group">
+                        <label for="">Lesson Name</label>
+                        <input type="text" class="form-control" name="name" id="placeholder"
+                            placeholder="Chapter Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Video URL</label>
+                        <input type="text" class="form-control" name="video" id="placeholder"
+                            placeholder="Video URL" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Chapter Id</label>
+                        <input type="text" class="form-control" name="chapter_id" id="placeholder"
+                            placeholder="Chapter Id" >
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light"
+                    data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+            
+        </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div id="full-width-modal-edit" class="modal fade" tabindex="-1" role="dialog2"
+aria-labelledby="fullWidthModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-full-width">
+    <div class="modal-content">
+        <form action="/dashboard/lesson?_method=PUT" method="POST">
+            <div class="form-group">
+                <input type="hidden" class="form-control id" name="id">
+            </div>
+        <div class="modal-header">
+            <h4 class="modal-title" id="fullWidthModalLabel">Edit Data Lesson</h4>
+            <button type="button" class="close" data-dismiss="modal"
+                aria-hidden="true">×</button>
+        </div>
+        <div class="modal-body">
+                <div class="form-group">
+                    <label for="">Lesson Name</label>
+                    <input type="text" class="form-control name" name="name" id="placeholder"
+                        placeholder="Lesson Name" required>
+                </div>
+                <div class="form-group">
+                    <label for="">Video URL</label>
+                    <input type="text" class="form-control video" name="video" id="placeholder"
+                        placeholder="Video URL" required>
+                </div>
+                <div class="form-group">
+                    <label for="">Chapter Id</label>
+                    <input type="text" class="form-control chapter_id" name="chapter_id" id="placeholder"
+                        placeholder="Chapter Id" >
+                </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-light"
+                data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+        
+    </form>
+    </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+   
     <script src="/libs/jquery/dist/jquery.min.js"></script>
     <script src="/libs/popper.js/dist/umd/popper.min.js"></script>
     <script src="/libs/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -84,7 +212,26 @@
     <script src="/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
     <script src="/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js"></script>
     <script src="/extra-libs/jvector/jquery-jvectormap-world-mill-en.js"></script>
-    <script src="/dist/js/pages/dashboards/dashboard1.min.js"></script>
+    <script src="/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/dist/js/pages/datatable/datatable-basic.init.js"></script>
+
+    <script>
+        $('#zero_config').on('click','.tombol-edit', function(){
+            let id = $(this).data('id');
+            let name = $(this).data('name');
+            let video = $(this).data('video');
+            let chapter_id = $(this).data('chapter_id');
+            
+
+
+            $('#full-width-modal-edit').modal('show');
+            $('.id').val(id);
+            $('.video').val(video);
+            $('.name').val(name);
+            $('.chapter_id').val(chapter_id);
+           
+        })
+    </script>
 </body>
 
 </html>
