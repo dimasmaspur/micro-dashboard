@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
-var multer = require("multer");
-var upload = multer({ dest: "/public/images" });
-
+const fs = require('fs');
+var multer = require('multer')
+var upload = multer({ dest: 'images/' })
 
 const apiAdapter = require('./apiAdapter');
 const {
@@ -16,8 +16,19 @@ const apiCourse = apiAdapter(URL_SERVICE_COURSE);
 const apiOrder = apiAdapter(URL_SERVICE_ORDER_PAYMENT);
 const apiMedia = apiAdapter(URL_SERVICE_MEDIA);
 /* GET home page. */
-router.get('/', function (req, res, next) {
-  res.render('admin/view_dashboard');
+router.get('/', async function (req, res, next) {
+  const course = await apiCourse.get('/api/courses');
+  dataCourse = course.data.data.total;
+
+  const mentor = await apiCourse.get('/api/mentors');
+  dataMentor = mentor.data.data;
+  totalMentor = dataMentor.length
+
+  const order = await apiOrder.get('/api/orders');
+  dataOrder = order.data.data;
+  totalOrder = dataOrder.length
+
+  res.render('admin/view_dashboard', { dataCourse, totalMentor, totalOrder });
 });
 
 // course
@@ -412,7 +423,50 @@ router.get('/media', async function (req, res, next) {
     return res.status(status).json(data);
   }
 });
+router.post('/media', upload.single('imageMedia'), async function (req, res, next) {
+  const imageMedia = req.file;
 
+  const mimetype = imageMedia.mimetype;
+  data_uri_prefix = "data:" + mimetype + ";base64,";
+  var imageAsBase64 = fs.readFileSync(imageMedia.path, "base64");
+  imageBase64 = data_uri_prefix + imageAsBase64
+
+
+  try {
+    await apiMedia.post('/media', { image: imageBase64 });
+    req.flash('alertMessage', 'Success');
+    req.flash('alertStatus', 'success');
+    res.redirect('/dashboard/media');
+  } catch (error) {
+
+    if (error.code === 'ECONNREFUSED') {
+      return res.status(500).json({ status: 'error', message: 'service unavailable' });
+    }
+    req.flash('alertMessage', `${error.message}`);
+    req.flash('alertStatus', 'danger');
+    res.redirect('/dashboard/media');
+  }
+});
+router.delete('/media/:id', async function (req, res, next) {
+  const { id } = req.params;
+
+  try {
+    await apiMedia.delete(`/media/${id}`);
+    req.flash('alertMessage', 'Success');
+    req.flash('alertStatus', 'success');
+    res.redirect('/dashboard/media');
+  } catch (error) {
+
+    if (error.code === 'ECONNREFUSED') {
+      return res.status(500).json({ status: 'error', message: 'service unavailable' });
+    }
+    req.flash('alertMessage', `${error.message}`);
+    req.flash('alertStatus', 'danger');
+    res.redirect('/dashboard/media');
+  }
+
+
+});
 // media
 
 module.exports = router;

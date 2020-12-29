@@ -45,6 +45,7 @@
             <div class="container-fluid">
                 <button type="button" class="btn waves-effect waves-light btn-primary mb-3" data-toggle="modal"
                 data-target="#full-width-modal">Add Media</button>
+                <p>Please Copy Url Image</p>
                  <!-- basic table -->
                  <% if(alert.message != "") {%>
                     <div class="alert alert-<%= alert.status %>" role="alert">
@@ -72,6 +73,7 @@
                                                     <td><img src="<%= dataMedia[i].image %>" width="100" alt="image"></td>
                                                     <td><%= dataMedia[i].image %></td>
                                                     <td>
+                                                        <form action="/dashboard/media/<%= dataMedia[i].id %>?_method=DELETE" method="POST">
                                                         <button type="submit" class="btn waves-effect waves-light btn-danger"><i data-feather="delete" class="feather-icon"></i></button></td>
                                                     </form>
                                                 </tr>
@@ -113,7 +115,7 @@
     aria-labelledby="fullWidthModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-full-width">
         <div class="modal-content">
-            <form action="/dashboard/media" method="POST" enctype="multipart/form-data">
+            <form action="/dashboard/media" method="POST" name="formGambar" enctype="multipart/form-data">
             <div class="modal-header">
                 <h4 class="modal-title" id="fullWidthModalLabel">Add Media</h4>
                 <button type="button" class="close" data-dismiss="modal"
@@ -121,10 +123,12 @@
             </div>
             <div class="modal-body">
                     <div class="form-group">
-                        <label for="">Upload Imge</label>
-                        <input type="file" class="form-control" name="image">
+                        <label for="">Upload Image</label>
+                        <input type="file" class="form-control" id="imageinput" name="imageMedia">
                     </div>
+
             </div>
+            <input type="hidden" id="imgbase64" name="imgbase64">
             <div class="modal-footer">
                 <button type="button" class="btn btn-light"
                     data-dismiss="modal">Close</button>
@@ -157,7 +161,6 @@
     <script src="/extra-libs/jvector/jquery-jvectormap-world-mill-en.js"></script>
     <script src="/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="/dist/js/pages/datatable/datatable-basic.init.js"></script>
-
 </body>
 
 </html>
